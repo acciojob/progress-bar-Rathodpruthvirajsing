@@ -3,41 +3,41 @@ const prev = document.getElementById('prev');
 const next = document.getElementById('next');
 const circles = document.querySelectorAll('.circle');
 
-let currentStep = 1;
+let currentActive = 1;
 
 next.addEventListener('click', () => {
-  currentStep++;
+  currentActive++;
 
-  if (currentStep > circles.length) {
-    currentStep = circles.length;
+  if (currentActive > circles.length) {
+    currentActive = circles.length;
   }
 
   update();
 });
 
 prev.addEventListener('click', () => {
-  currentStep--;
+  currentActive--;
 
-  if (currentStep < 1) {
-    currentStep = 1;
+  if (currentActive < 1) {
+    currentActive = 1;
   }
 
   update();
 });
 
 function update() {
-  circles.forEach((circle, index) => {
-    if (index < currentStep) {
+  circles.forEach((circle, idx) => {
+    if (idx < currentActive) {
       circle.classList.add('active');
     } else {
       circle.classList.remove('active');
     }
   });
 
-  const activeCircles = document.querySelectorAll('.circle.active');
-  const progressWidth = ((activeCircles.length - 1) / (circles.length - 1)) * 100;
-  progress.style.width = progressWidth + '%';
+  const activeCount = document.querySelectorAll('.circle.active').length;
+  const total = circles.length;
+  progress.style.width = ((activeCount - 1) / (total - 1)) * 100 + '%';
 
-  prev.disabled = currentStep === 1;
-  next.disabled = currentStep === circles.length;
+  prev.disabled = currentActive === 1;
+  next.disabled = currentActive === circles.length;
 }
